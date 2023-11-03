@@ -1,0 +1,43 @@
+{
+  "private": true,
+  "workspaces": [
+    "packages/client",
+    "packages/server"
+  ],
+  "packageManager": "yarn@3.1.1",
+  "devDependencies": {
+    "@babel/core": "^7.17.10",
+    "@babel/eslint-parser": "^7.17.0",
+    "@typescript-eslint/eslint-plugin": "^5.25.0",
+    "@typescript-eslint/parser": "^5.25.0",
+    "buffer": "^6.0.3",
+    "concurrently": "^7.2.1",
+    "eslint": "^8.16.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.6.2"
+  },
+  "staticFiles": {
+    "staticPath": "src/assets",
+    "staticOutPath": "assets"
+  },
+  "scripts": {
+    "build": "yarn workspaces foreach -p run build",
+    "clean": "rm -Rf packages/client/dist && rm -Rf packages/server/dist && cd packages/client && mkdir dist && cd ../server && mkdir dist && echo 'done'",
+    "dev": "concurrently -k \"yarn:dev:*\"",
+    "dev:client": "yarn workspace @neu5/client dev",
+    "dev:server": "yarn workspace @neu5/server dev",
+    "dev:serve": "yarn workspace @neu5/server dev:serve",
+    "lint": "eslint 'packages/**/*.ts'",
+    "serve": "yarn workspace @neu5/server serve",
+    "test": "yarn workspaces foreach -p run test"
+  },
+  "resolutions": {
+    "got": "^11.8.5",
+    "json5": "^2.2.2",
+    "socket.io-parser": "^4.2.3"
+  }
+}
