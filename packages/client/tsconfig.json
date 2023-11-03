@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "es6",
+    "strict": true,
+    "noImplicitAny": true,
+    "noEmit": true,
+    "allowJs": true,
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "types": [
+      "node"
+    ],
+    "paths": {
+      "~/*": [
+        "./*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "src/refactor.ts"
+  ]
+}

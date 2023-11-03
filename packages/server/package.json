@@ -1,0 +1,35 @@
+{
+  "name": "@neu5/server",
+  "private": true,
+  "version": "0.0.1",
+  "repository": "https://github.com/neu5/rally-online",
+  "author": "neu5",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": "^16.13"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "@babylonjs/core": "^6.25.0",
+    "@babylonjs/havok": "^1.2.1",
+    "@types/express": "^4.17.13",
+    "nodemon": "^2.0.16",
+    "socket.io": "^4.5.1",
+    "ts-node": "^10.8.0",
+    "typescript": "^4.7.4"
+  },
+  "packageManager": "yarn@3.1.1",
+  "nodemonConfig": {
+    "delay": "1000"
+  },
+  "scripts": {
+    "build": "tsc",
+    "serve": "node --experimental-specifier-resolution=node dist/index.js",
+    "dev": "NODE_ENV=development tsc --watch",
+    "dev:serve": "NODE_ENV=development nodemon --experimental-specifier-resolution=node dist/index.js",
+    "test": "tsc --noEmit"
+  }
+}
