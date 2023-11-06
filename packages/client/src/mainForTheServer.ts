@@ -14,20 +14,12 @@ import {
   StandardMaterial,
   Vector3,
 } from "@babylonjs/core";
-import HavokPhysics from "@babylonjs/havok";
-
-async function getInitializedHavok() {
-  try {
-    return await HavokPhysics();
-  } catch (e) {
-    return e;
-  }
-}
 
 const groundSize = 100;
-let groundPhysicsMaterial = { friction: 0.2, restitution: 0.3 };
 
-const canvas = document.getElementById("canvas") as HTMLCanvasElement;
+const canvas = document.getElementById(
+  "canvasForTheServer"
+) as HTMLCanvasElement;
 const engine = new Engine(canvas, true, {
   preserveDrawingBuffer: true,
   stencil: true,
@@ -49,29 +41,6 @@ function createHeightmap({
       height: groundSize,
       subdivisions: 100,
       maxHeight: 10,
-      onReady: (mesh) => {
-        // meshesToDispose.push(mesh);
-        mesh.material = new StandardMaterial("heightmapMaterial");
-        // matsToDispose.push(mesh.material);
-        // mesh.material.emissiveColor = Color3.Green();
-        // mesh.material.wireframe = true;
-
-        const groundShape = new PhysicsShapeMesh(ground, scene);
-        // shapesToDispose.push(groundShape);
-
-        const body = new PhysicsBody(
-          ground,
-          PhysicsMotionType.STATIC,
-          false,
-          scene
-        );
-        // bodiesToDispose.push(body);
-        groundShape.material = material;
-        body.shape = groundShape;
-        body.setMassProperties({
-          mass: 0,
-        });
-      },
     },
     scene
   );
@@ -118,36 +87,6 @@ const createScene = async function () {
     { width: groundSize, height: groundSize },
     scene
   );
-
-  // initialize plugin
-  const havokInstance = await getInitializedHavok();
-  // pass the engine to the plugin
-  const hk = new HavokPlugin(true, havokInstance);
-  // enable physics in the scene with a gravity
-  scene.enablePhysics(new Vector3(0, -9.8, 0), hk);
-
-  // Create a sphere shape and the associated body. Size will be determined automatically.
-  // eslint-disable-next-line
-  const sphereAggregate = new PhysicsAggregate(
-    sphere,
-    PhysicsShapeType.SPHERE,
-    { mass: 1, restitution: 0.75 },
-    scene
-  );
-
-  // Create a static box shape.
-  // eslint-disable-next-line
-  const groundAggregate = new PhysicsAggregate(
-    ground,
-    PhysicsShapeType.BOX,
-    { mass: 0 },
-    scene
-  );
-
-  createHeightmap({
-    scene,
-    material: groundPhysicsMaterial,
-  });
 
   return scene;
 };

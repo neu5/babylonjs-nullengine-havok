@@ -7,7 +7,15 @@
   </head>
 
   <body>
-    <canvas id="canvas"></canvas>
+    <div class="canvas-wrapper">
+      <h2>client</h2>
+      <canvas id="canvas" class="canvas"></canvas>
+    </div>
+    <div class="canvas-wrapper">
+      <h2>server</h2>
+      <canvas id="canvasForTheServer" class="canvas"></canvas>
+    </div>
     <script type="module" src="main.ts"></script>
+    <script type="module" src="mainForTheServer.ts"></script>
   </body>
 </html>
