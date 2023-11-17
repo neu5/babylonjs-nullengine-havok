@@ -9,7 +9,7 @@ import { Server } from "socket.io";
 // import type { GameServer, ServerToClientEvents } from "@neu5/types/src";
 
 // import { InMemorySessionStore } from "./sessionStore";
-import { createSocketHandlers } from "./sockets/sockets";
+// import { createSocketHandlers } from "./sockets/sockets";
 
 const getDirname = (meta: { url: string }) => fileURLToPath(meta.url);
 const rootDir = getDirname(import.meta);
@@ -21,7 +21,7 @@ const httpServer = createServer(app);
 const randomId = () => randomBytes(8).toString("hex");
 // const sessionStore = new InMemorySessionStore();
 
-const io = new Server<any>(httpServer);
+// const io = new Server<ServerToClientEvents>(httpServer);
 
 // let game: GameServer = {
 //   config: {
@@ -58,10 +58,9 @@ const io = new Server<any>(httpServer);
 //   return next();
 // });
 
-io.on("connection", (socket) => {
-  // createSocketHandlers({ game, io, sessionStore, socket });
-  console.log("user");
-});
+// io.on("connection", (socket) => {
+//   createSocketHandlers({ game, io, sessionStore, socket });
+// });
 
 app.use(express.static(distDir));
 

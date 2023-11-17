@@ -1,4 +1,3 @@
-import { io } from "socket.io-client";
 import {
   ArcRotateCamera,
   // Color3,
@@ -15,7 +14,6 @@ import {
   StandardMaterial,
   Vector3,
 } from "@babylonjs/core";
-import type { Socket } from "socket.io-client";
 
 const groundSize = 100;
 
@@ -99,8 +97,6 @@ createScene().then((scene) => {
       scene.render();
     }
   });
-
-  const socket = io(window.location.host);
 });
 // Resize
 window.addEventListener("resize", function () {
