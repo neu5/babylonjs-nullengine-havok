@@ -28,13 +28,7 @@ const engine = new Engine(canvas, true, {
   disableWebGL2Support: false,
 });
 
-function createHeightmap({
-  scene,
-  material,
-}: {
-  scene: Scene;
-  material: StandardMaterial;
-}) {
+function createHeightmap({ scene }: { scene: Scene }) {
   const ground = MeshBuilder.CreateGroundFromHeightMap(
     "ground",
     "assets/heightmap.png",
@@ -83,12 +77,9 @@ const createScene = async function () {
   // Move the sphere upward at 4 units
   sphere.position.y = 60;
 
-  // Our built-in 'ground' shape.
-  const ground = MeshBuilder.CreateGround(
-    "ground",
-    { width: groundSize, height: groundSize },
-    scene
-  );
+  createHeightmap({
+    scene,
+  });
 
   return scene;
 };

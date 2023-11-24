@@ -54,13 +54,6 @@ const createSocketHandlers = ({
   sessionStore: InMemorySessionStore;
   socket: Socket<ServerToClientEvents>;
 }) => {
-  // persist session
-  sessionStore.saveSession(socket.data.sessionID, {
-    connected: true,
-    userID: socket.data.userID,
-    username: socket.data.username,
-  });
-
   socket.emit("server:session", {
     sessionID: socket.data.sessionID,
     userID: socket.data.userID,
