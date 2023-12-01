@@ -97,7 +97,6 @@ createScene().then(({ scene, sphere }) => {
   const socket = io(window.location.host);
 
   socket.on("server:sent sphere position", (sphereFromTheServer) => {
-    console.log(sphereFromTheServer);
     sphere.position = sphereFromTheServer.position;
   });
 });
