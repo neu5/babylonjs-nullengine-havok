@@ -179,7 +179,9 @@ io.on("connection", async (socket) => {
   });
 
   loop = setInterval(() => {
-    // socket.emit()
+    socket.emit("server:sent sphere position", {
+      position: sphere.position,
+    });
   }, FRAME_IN_MS);
 
   socket.on("disconnect", () => {
