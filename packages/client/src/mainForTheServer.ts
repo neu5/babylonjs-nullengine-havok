@@ -81,10 +81,13 @@ const createScene = async function () {
     scene,
   });
 
-  return scene;
+  return {
+    scene,
+    sphere,
+  };
 };
 
-createScene().then((scene) => {
+createScene().then(({ scene, sphere }) => {
   engine.runRenderLoop(function () {
     if (scene) {
       scene.render();
@@ -92,6 +95,10 @@ createScene().then((scene) => {
   });
 
   const socket = io(window.location.host);
+
+  socket.on("server:sent sphere position", (sphereFromTheServer) => {
+    sphere.position = sphereFromTheServer.position;
+  });
 });
 // Resize
 window.addEventListener("resize", function () {

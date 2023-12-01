@@ -46,6 +46,9 @@ const mapPath = path.join(rootDir, "../../../", "src/assets/heightmap.png");
 const groundSize = 100;
 let groundPhysicsMaterial = { friction: 0.2, restitution: 0.3 };
 
+const FRAME_IN_MS = 1000 / 30; // 30 FPS
+let loop = setInterval(() => {}, FRAME_IN_MS);
+
 const createHeightmap = ({
   scene,
   mapInBase64,
@@ -138,6 +141,15 @@ io.on("connection", async (socket) => {
     scene
   );
 
+  const sphere = MeshBuilder.CreateSphere(
+    "sphere",
+    { diameter: 2, segments: 32 },
+    scene
+  );
+
+  // Move the sphere upward at 4 units
+  sphere.position.y = 60;
+
   const camera = new ArcRotateCamera( // eslint-disable-line
     "camera",
     -Math.PI / 2,
@@ -146,9 +158,31 @@ io.on("connection", async (socket) => {
     Vector3.Zero()
   );
 
+  const sphereAggregate = new PhysicsAggregate(
+    sphere,
+    PhysicsShapeType.SPHERE,
+    { mass: 1, restitution: 0.75 },
+    scene
+  );
+
+  // Create a static box shape.
+  // eslint-disable-next-line
+  const groundAggregate = new PhysicsAggregate(
+    ground,
+    PhysicsShapeType.BOX,
+    { mass: 0 },
+    scene
+  );
+
   engine.runRenderLoop(() => {
     scene.render();
   });
+
+  loop = setInterval(() => {
+    socket.emit("server:sent sphere position", {
+      position: sphere.position,
+    });
+  }, FRAME_IN_MS);
 
   socket.on("disconnect", () => {
     console.log("user disconnected");
