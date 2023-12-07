@@ -41,7 +41,7 @@ const wasm = path.join(
   "node_modules/@babylonjs/havok/lib/esm/HavokPhysics.wasm"
 );
 
-const mapPath = path.join(rootDir, "../../../", "src/assets/heightmap.png");
+const mapPath = path.join(rootDir, "../../", "src/assets/heightmap.png");
 
 const groundSize = 100;
 let groundPhysicsMaterial = { friction: 0.2, restitution: 0.3 };
@@ -68,8 +68,6 @@ const createHeightmap = ({
       maxHeight: 10,
       onReady: (mesh) => {
         mesh.material = new StandardMaterial("heightmapMaterial");
-        // mesh.material.emissiveColor = Color3.Green();
-        // mesh.material.wireframe = true;
 
         const groundShape = new PhysicsShapeMesh(ground, scene);
 
@@ -173,6 +171,14 @@ io.on("connection", async (socket) => {
     { mass: 0 },
     scene
   );
+
+  const mapInBase64 = await getMap();
+
+  createHeightmap({
+    scene,
+    mapInBase64,
+    material: groundPhysicsMaterial,
+  });
 
   engine.runRenderLoop(() => {
     scene.render();
