@@ -1,21 +1,12 @@
 import { io } from "socket.io-client";
 import {
   ArcRotateCamera,
-  // Color3,
   Engine,
-  HavokPlugin,
   HemisphericLight,
   MeshBuilder,
-  PhysicsAggregate,
-  PhysicsBody,
-  PhysicsMotionType,
-  PhysicsShapeMesh,
-  PhysicsShapeType,
   Scene,
-  StandardMaterial,
   Vector3,
 } from "@babylonjs/core";
-import type { Socket } from "socket.io-client";
 
 const groundSize = 100;
 
@@ -29,6 +20,7 @@ const engine = new Engine(canvas, true, {
 });
 
 function createHeightmap({ scene }: { scene: Scene }) {
+  // eslint-disable-next-line
   const ground = MeshBuilder.CreateGroundFromHeightMap(
     "ground",
     "assets/heightmap.png",
@@ -75,7 +67,7 @@ const createScene = async function () {
   );
 
   // Move the sphere upward at 4 units
-  sphere.position.y = 60;
+  sphere.position.y = 20;
 
   createHeightmap({
     scene,

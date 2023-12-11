@@ -1,14 +1,11 @@
 import { fileURLToPath } from "url";
-import { randomBytes } from "crypto";
 import { resolve } from "path";
 import express from "express";
 import { createServer } from "http";
-import type { Socket } from "socket.io";
 import { Server } from "socket.io";
 
 import {
   ArcRotateCamera,
-  Engine,
   HavokPlugin,
   MeshBuilder,
   NullEngine,
@@ -22,6 +19,8 @@ import {
   Vector3,
 } from "@babylonjs/core";
 import HavokPhysics from "@babylonjs/havok";
+
+import type { Engine } from "@babylonjs/core";
 
 import * as path from "path";
 import * as fs from "fs";
@@ -47,6 +46,8 @@ const groundSize = 100;
 let groundPhysicsMaterial = { friction: 0.2, restitution: 0.3 };
 
 const FRAME_IN_MS = 1000 / 30; // 30 FPS
+
+// eslint-disable-next-line
 let loop = setInterval(() => {}, FRAME_IN_MS);
 
 const createHeightmap = ({
@@ -59,7 +60,7 @@ const createHeightmap = ({
   material: StandardMaterial;
 }) => {
   const ground = MeshBuilder.CreateGroundFromHeightMap(
-    "ground",
+    "groundHeightmap",
     mapInBase64,
     {
       width: groundSize,
@@ -92,7 +93,7 @@ const createHeightmap = ({
 const getInitializedHavok = async () => {
   try {
     const binary = fs.readFileSync(wasm);
-    return HavokPhysics({ wasmBinary: binary });
+    return await HavokPhysics({ wasmBinary: binary });
   } catch (e) {
     return e;
   }
@@ -109,6 +110,7 @@ const createScene = async (engine: Engine) => {
   const scene = new Scene(engine);
 
   // This creates and positions a free camera (non-mesh)
+  // eslint-disable-next-line
   const camera = new ArcRotateCamera(
     "camera1",
     -Math.PI / 2,
@@ -146,7 +148,7 @@ io.on("connection", async (socket) => {
   );
 
   // Move the sphere upward at 4 units
-  sphere.position.y = 60;
+  sphere.position.y = 20;
 
   const camera = new ArcRotateCamera( // eslint-disable-line
     "camera",
@@ -156,6 +158,7 @@ io.on("connection", async (socket) => {
     Vector3.Zero()
   );
 
+  // eslint-disable-next-line
   const sphereAggregate = new PhysicsAggregate(
     sphere,
     PhysicsShapeType.SPHERE,

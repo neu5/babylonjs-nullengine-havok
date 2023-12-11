@@ -1,6 +1,5 @@
 import {
   ArcRotateCamera,
-  // Color3,
   Engine,
   HavokPlugin,
   HemisphericLight,
@@ -42,7 +41,7 @@ function createHeightmap({
   material: StandardMaterial;
 }) {
   const ground = MeshBuilder.CreateGroundFromHeightMap(
-    "ground",
+    "groundHeightmap",
     "assets/heightmap.png",
     {
       width: groundSize,
@@ -110,7 +109,7 @@ const createScene = async function () {
   );
 
   // Move the sphere upward at 4 units
-  sphere.position.y = 60;
+  sphere.position.y = 20;
 
   // Our built-in 'ground' shape.
   const ground = MeshBuilder.CreateGround(
